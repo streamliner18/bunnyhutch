@@ -49,7 +49,7 @@ function subscriptions(state = [], action) {
 function messages(state = [], action) {
   switch (action.type) {
     case "MESSAGE_ADD":
-      return _.concat(state, action.data)
+      return _.concat([action.data], state)
     case "MESSAGE_CLEAR":
       return []
     default:

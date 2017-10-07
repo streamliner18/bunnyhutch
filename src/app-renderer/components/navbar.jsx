@@ -54,7 +54,7 @@ export default class AppNav extends Component {
     const { dispatch, connected } = this.props
     const { broker, username, password } = this.state
     return (
-      <Navbar light expand="md">
+      <Navbar light fixed='top' expand="md">
         <NavbarBrand href="/">Bunnyhutch</NavbarBrand>
         <NavbarToggler onClick={this.toggle} />
         <Collapse isOpen={this.state.isOpen} navbar>

@@ -30,9 +30,9 @@ export class App extends Component {
   }
   render() {
     const { dispatch, connection, subscriptions, messages, settings } = this.props
-    return <div>
+    return <div style={{height: '100%'}}>
       <AppNav {...connection} dispatch={dispatch} />
-      <Container fluid className="pt-2">
+      <Container fluid className="pt-2 mt-5 main-container">
         <Row>
           <Col md='12'>
           <Nav tabs>
@@ -71,7 +71,7 @@ export class App extends Component {
           </TabContent>
           </Col>
         </Row>
-        <Row>
+        <Row className="message-area">
           <Col sm='12'>
             <Messages {...this.props} />
           </Col>

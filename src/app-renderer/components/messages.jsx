@@ -14,6 +14,9 @@ const MsgItem = (props) =>
         borderRadius: '50%'
       }}/>
     </td>
+    <td>
+      {props.received.toLocaleTimeString()}
+    </td>
     <td>{props.content}</td>
   </tr>
 
@@ -29,6 +32,7 @@ export default class Messages extends Component {
       <thead>
         <tr>
           <th>#</th>
+          <th>Timestamp</th>
           <th>Content</th>
         </tr>
       </thead>
