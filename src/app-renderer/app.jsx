@@ -5,6 +5,7 @@ import { TabContent, TabPane, Nav, NavItem, NavLink } from 'reactstrap'
 import classnames from 'classnames'
 import Subscriptions from './components/subscriptions'
 import Messages from './components/messages'
+import Tools from './components/tools'
 import Settings from './components/settings'
 import { createStore } from 'redux'
 import { Provider, connect } from 'react-redux'
@@ -49,6 +50,14 @@ export class App extends Component {
               className={classnames({ active: this.state.activeTab === '2' })}
               onClick={() => { this.toggle('2'); }}
             >
+              Tools
+            </NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink
+              className={classnames({ active: this.state.activeTab === '3' })}
+              onClick={() => { this.toggle('3'); }}
+            >
               Settings
             </NavLink>
           </NavItem>
@@ -57,11 +66,18 @@ export class App extends Component {
           <TabPane tabId="1">
             <Row>
               <Col sm="12">
-                <Subscriptions connection={connection} dispatch={dispatch} subscriptions={subscriptions} />
+                <Subscriptions {...this.props} />
               </Col>
             </Row>
           </TabPane>
           <TabPane tabId="2">
+            <Row>
+              <Col sm="12">
+                <Tools {...this.props} />
+              </Col>
+            </Row>
+          </TabPane>
+          <TabPane tabId="3">
             <Row>
               <Col sm="12">
                 <Settings />

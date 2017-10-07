@@ -11,6 +11,7 @@ export function handleRabbitMsg(dispatch, sub, msg) {
     content: msg.content,
     color: sub.color,
     tag: sub.tag,
+    channel: sub.name,
     received: new Date(),
     id: uuidv4()
   }

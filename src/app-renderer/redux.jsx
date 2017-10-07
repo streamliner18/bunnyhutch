@@ -49,7 +49,11 @@ function subscriptions(state = [], action) {
 function messages(state = [], action) {
   switch (action.type) {
     case "MESSAGE_ADD":
-      return _.concat([action.data], state)
+      try {
+        action.data.content = action.data.content.toString('utf8')
+      } finally {
+        return _.concat([action.data], state)
+      }
     case "MESSAGE_CLEAR":
       return []
     default:
