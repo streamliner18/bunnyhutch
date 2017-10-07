@@ -1,0 +1,72 @@
+{
+    "name": "bunnyhutch",
+    "productName": "bunnyhutch",
+    "version": "1.0.0",
+    "description": "My Electron application description",
+    "main": "src/index.js",
+    "scripts": {
+        "start": "electron-forge start",
+        "package": "electron-forge package",
+        "make": "electron-forge make",
+        "publish": "electron-forge publish",
+        "lint": "echo \"No linting configured\""
+    },
+    "keywords": [],
+    "author": "jimmy",
+    "license": "MIT",
+    "config": {
+        "forge": {
+            "make_targets": {
+                "win32": [
+                    "squirrel"
+                ],
+                "darwin": [
+                    "zip"
+                ],
+                "linux": [
+                    "deb",
+                    "rpm"
+                ]
+            },
+            "electronPackagerConfig": {
+                "packageManager": "yarn"
+            },
+            "electronWinstallerConfig": {
+                "name": "bunnyhutch"
+            },
+            "electronInstallerDebian": {},
+            "electronInstallerRedhat": {},
+            "github_repository": {
+                "owner": "",
+                "name": ""
+            },
+            "windowsStoreConfig": {
+                "packageName": "",
+                "name": "bunnyhutch"
+            }
+        }
+    },
+    "dependencies": {
+        "amqplib": "^0.5.1",
+        "electron-compile": "^6.4.2",
+        "electron-devtools-installer": "^2.1.0",
+        "electron-squirrel-startup": "^1.0.0",
+        "lodash": "^4.17.4",
+        "react": "^15.4.1",
+        "react-color": "^2.13.8",
+        "react-dom": "^15.4.1",
+        "react-hot-loader": "^3.0.0-beta.6",
+        "react-redux": "^5.0.6",
+        "react-transition-group": "^2.2.1",
+        "reactstrap": "5.0.0-alpha.3",
+        "redux": "^3.7.2"
+    },
+    "devDependencies": {
+        "babel-plugin-transform-async-to-generator": "^6.24.1",
+        "babel-plugin-transform-es2015-classes": "^6.24.1",
+        "babel-preset-env": "^1.6.0",
+        "babel-preset-react": "^6.24.1",
+        "electron-forge": "^4.1.2",
+        "electron-prebuilt-compile": "1.7.8"
+    }
+}
