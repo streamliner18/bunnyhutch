@@ -55,7 +55,7 @@ export default class AppNav extends Component {
     const { broker, username, password } = this.state
     return (
       <Navbar light fixed='top' expand="md">
-        <NavbarBrand href="/">Bunnyhutch</NavbarBrand>
+        <NavbarBrand href="#">🐇</NavbarBrand>
         <NavbarToggler onClick={this.toggle} />
         <Collapse isOpen={this.state.isOpen} navbar>
           {
@@ -90,11 +90,6 @@ export default class AppNav extends Component {
                 <Button onClick={this.handleConnect}>Connect</Button>
               </Form>
           }
-          <Nav className="ml-auto" navbar>
-            <NavItem>
-              <NavLink href="https://github.com/reactstrap/reactstrap">Github</NavLink>
-            </NavItem>
-          </Nav>
         </Collapse>
       </Navbar>
     );
