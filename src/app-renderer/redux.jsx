@@ -46,16 +46,28 @@ function subscriptions(state = [], action) {
   }
 }
 
-function messages(state = [], action) {
+function messages(state = {data: [], columns:[]}, action) {
   switch (action.type) {
     case "MESSAGE_ADD":
+      let data = action.data.content
       try {
-        action.data.content = action.data.content.toString('utf8')
+        data = data.toString('utf8')
+        try {
+          data = JSON.parse(data)
+        } catch(e) {
+          data = {value: data}
+        }
       } finally {
-        return _.concat([action.data], state)
+        action.data.content = data
+        let new_cols = Object.keys(data)
+        const result = {
+          data: _.concat([action.data], state.data),
+          columns: [...new Set([].concat(...state.columns, ...new_cols))]
+        }
+        return result
       }
     case "MESSAGE_CLEAR":
-      return []
+      return {data: [], columns:[]}
     default:
       return state
   }
