@@ -16,7 +16,7 @@ export default class Tools extends Component {
   }
 
   handleXLSExport () {
-    let data = this.props.messages
+    let { data } = this.props.messages
     let ws = XLSX.utils.json_to_sheet(data, {
       header: ['channel', 'received', 'content']
     })
@@ -30,7 +30,7 @@ export default class Tools extends Component {
    }
 
   handleJSONExport () {
-    let s = JSON.stringify({data: this.props.messages})
+    let s = JSON.stringify(this.props.messages)
     const fs = require('fs')
     var o = dialog.showSaveDialog(remote.getCurrentWindow())
     if (o) {
