@@ -3,9 +3,9 @@ import { Container, Row, Col } from 'reactstrap'
 import { Table } from 'reactstrap'
 import { IconFA } from './Icons'
 import { addMessage, clearMessages } from "../redux";
+import _ from 'lodash'
 
 const MsgItem = (props) => {
-  console.log(props)
   return <tr>
   <td>
     <div style={{
@@ -42,7 +42,7 @@ export default class Messages extends Component {
         </tr>
       </thead>
       <tbody>
-        {data.map(i => <MsgItem key={i.id} columns={columns} data={i} />)}
+        {_.slice(data, 0, 1000).map(i => <MsgItem key={i.id} columns={columns} data={i} />)}
       </tbody>
     </Table>
   }
