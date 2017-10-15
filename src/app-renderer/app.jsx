@@ -13,6 +13,14 @@ import Reducers from './redux'
 
 export let store = createStore(Reducers)
 
+const inputMenu = require('electron-input-menu')
+const context = require('electron-contextmenu-middleware')
+
+context.use(inputMenu)
+
+context.activate()
+inputMenu.registerShortcuts()
+
 export class App extends Component {
   constructor(props) {
     super(props);
