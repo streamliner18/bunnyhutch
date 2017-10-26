@@ -12,7 +12,7 @@
         "lint": "echo \"No linting configured\""
     },
     "keywords": [],
-    "author": "jimmy",
+    "author": "Streamliner",
     "license": "MIT",
     "config": {
         "forge": {
@@ -53,6 +53,7 @@
         "electron-devtools-installer": "^2.1.0",
         "electron-input-menu": "^2.1.0",
         "electron-squirrel-startup": "^1.0.0",
+        "immutability-helper": "^2.4.0",
         "lodash": "^4.17.4",
         "react": "^15.4.1",
         "react-color": "^2.13.8",
