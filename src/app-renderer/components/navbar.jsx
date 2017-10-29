@@ -49,7 +49,7 @@ export default class AppNav extends Component {
               ? <Nav>
                 <NavLink>
                   <span>
-                    Connected to {this.props.broker}
+                    Connected to {this.state.broker}
                     </span>
                 </NavLink>
                 <Button onClick={() => dispatch(disconnect())}>disconnect</Button>
