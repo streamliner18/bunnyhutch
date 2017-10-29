@@ -40,7 +40,7 @@ export class App extends Component {
   }
   render() {
     const { dispatch, connection, subscriptions, messages, settings } = this.props
-    const { activeTab } = this.props
+    const { activeTab } = this.state
     return <div style={{height: '100%'}}>
       <AppNav {...connection} dispatch={dispatch} />
       <RabbitDriver {...this.props} />
