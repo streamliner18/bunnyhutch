@@ -6,7 +6,6 @@ import { IconFA } from './Icons'
 import { ListGroup, ListGroupItem } from 'reactstrap'
 import { CirclePicker } from 'react-color'
 import { addSub, deleteSub } from "../redux";
-import { handleRabbitMsg } from '../rabbit'
 
 class NewSubscriptionModal extends Component {
   constructor(props) {

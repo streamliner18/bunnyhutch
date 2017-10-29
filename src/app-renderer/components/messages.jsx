@@ -42,7 +42,7 @@ export default class Messages extends Component {
         </tr>
       </thead>
       <tbody>
-        {_.slice(data, 0, 1000).map(i => <MsgItem key={i.id} columns={columns} data={i} />)}
+        {_.slice(data, 0, 1000).map(i => <MsgItem key={i._id} columns={columns} data={i} />)}
       </tbody>
     </Table>
   }
