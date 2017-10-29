@@ -6,7 +6,6 @@ import { IconFA } from './Icons'
 import { ListGroup, ListGroupItem } from 'reactstrap'
 import { CirclePicker } from 'react-color'
 import { addSub, deleteSub } from "../redux";
-import { handleRabbitMsg } from '../rabbit'
 
 class NewSubscriptionModal extends Component {
   constructor(props) {
@@ -51,20 +50,12 @@ class NewSubscriptionModal extends Component {
   }
 
   handleSubmit(e) {
+    // FIXME: Data driven implementation
     e.preventDefault()
-    const { dispatch, subscriptions, connection } = this.props
-    const { exchange, bind, name } = this.state
-    const { ch } = connection
-    ch.assertExchange(exchange, 'topic')
-    ch.assertQueue('', {exclusive: true}, (err, q) => {
-      console.log("Queue creation complete:", q.queue)
-      ch.bindQueue(q.queue, exchange, bind)
-      const data = Object.assign({}, this.state, {tag: q.queue})
-      console.log("Data creation complete")
-      dispatch(addSub(data))
-      this.toggle()
-      ch.consume(q.queue, handleRabbitMsg.bind(this, dispatch, data), {consumerTag: q.queue, noAck: true})
-    })
+    const { dispatch } = this.props
+    const { exchange, bind, name, color } = this.state
+    dispatch(addSub({exchange, bind, name, color}))
+    this.toggle()
   }
 
   render() {
@@ -137,9 +128,7 @@ export default class Subscriptions extends Component {
   }
 
   handleUnsub(tag) {
-    const { dispatch, subscriptions, connection } = this.props
-    const { ch } = connection
-    ch.cancel(tag)
+    const { dispatch } = this.props
     dispatch(deleteSub(tag))
   }
 
@@ -157,8 +146,8 @@ export default class Subscriptions extends Component {
             <ListGroup>
               {
                 subscriptions.map(i => <SubItem
-                  key={i.tag}
-                  unsub={this.handleUnsub.bind(this, i.tag)}
+                  key={i._id}
+                  unsub={this.handleUnsub.bind(this, i._id)}
                   {...i}
                 />)
               }

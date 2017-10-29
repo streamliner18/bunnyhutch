@@ -3,7 +3,6 @@ import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink } f
 import { Button, Form, FormGroup, Label, Input, InputGroup, InputGroupAddon } from 'reactstrap'
 import { IconFA } from './Icons'
 import { connect, disconnect } from "../redux";
-import amqp from "amqplib/callback_api";
 
 export default class AppNav extends Component {
   constructor(props) {
@@ -33,25 +32,12 @@ export default class AppNav extends Component {
 
   handleConnect () {
     const { dispatch } = this.props
-    const { broker, username, password } = this.state
-    let connStr = 'amqp://'
-    if (username) {
-      connStr += username
-      if (password) connStr += ':' + password
-      connStr += '@'
-    }
-    connStr += broker
-    amqp.connect(connStr, (err, conn) => {
-      console.log("Connection OK")
-      conn.createChannel((err, ch) => {
-        dispatch(connect(broker, ch, conn))
-        console.log("Channel created")
-      })
-    })
+    dispatch(connect(this.state))
   }
 
   render() {
-    const { dispatch, connected } = this.props
+    // TODO: Handle the new tri-state indicator
+    const { dispatch, status } = this.props
     const { broker, username, password } = this.state
     return (
       <Navbar light fixed='top' expand="md">
@@ -59,11 +45,11 @@ export default class AppNav extends Component {
         <NavbarToggler onClick={this.toggle} />
         <Collapse isOpen={this.state.isOpen} navbar>
           {
-            connected
+            status == 'connected'
               ? <Nav>
                 <NavLink>
                   <span>
-                    Connected to {this.props.broker}
+                    Connected to {this.state.broker}
                     </span>
                 </NavLink>
                 <Button onClick={() => dispatch(disconnect())}>disconnect</Button>
@@ -87,7 +73,7 @@ export default class AppNav extends Component {
                     <Input value={password} type="password" name="password" id="brokerPassword" onChange={this.handleChange} placeholder="Password" />
                   </InputGroup>
                 </FormGroup>
-                <Button onClick={this.handleConnect}>Connect</Button>
+                <Button onClick={this.handleConnect} disabled={status=='connecting'}>Connect</Button>
               </Form>
           }
         </Collapse>
