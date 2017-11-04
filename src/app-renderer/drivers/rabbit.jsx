@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import _ from 'lodash'
-import { addMessage, connected, connect, invalidateAllSub, validateSub, invalidateSub } from '../redux'
+import { addMessage, connected, connect, disconnect, invalidateAllSub, deleteSub, validateSub, invalidateSub } from '../redux'
 import amqp from 'amqplib'
 import { uuidv4 } from '../utils/uuid'
 import update from 'immutability-helper'
@@ -33,6 +33,10 @@ class RabbitSub extends Component {
       dispatch(validateSub(data._id))
     } catch (e) {
       console.log('[SUB:', data.name, '] Exception.', e, 'Retry in 1 sec.')
+      if (e.cause && e.cause.message.includes('Operation failed')) {
+        dispatch(deleteSub(data._id))
+        alert('You have submitted an invalid subscription, and it is removed.')
+      }
       setTimeout(() => {
         if (this._mounted) this.componentDidMount()
       }, 1000)
@@ -100,23 +104,33 @@ export default class RabbitDriver extends Component {
           (password ? `${username}:${password}@` : `${username}@`) : ''
         let connStr = 'amqp://' + authStr + broker
         // Connect to broker
+        const reconnect = (err, retry=false) => {
+          console.log("[CONN] RECONNECT by", err)
+          dispatch(disconnect(false))
+          if (retry && connection.retry > 3) alert('Retry too many times, disconnect')
+          else dispatch(connect(null, err))
+        }
         try {
           let conn = await amqp.connect(connStr)
           let ch = await conn.createChannel()
           console.log("[CONN] Channel created")
           await this.setStateAsync({conn, ch})
           dispatch(connected())
-          const reconnect = err => dispatch(connect(null, err))
           conn.on('error', reconnect)
           conn.on('closed', reconnect)
           ch.on('error', reconnect)
         } catch (e) {
           console.log('error', e)
+          reconnect(e, true)
         }
         break
       case 'disconnected':
         if (this.state.connected) {
-          await this.state.conn.close()
+          try {
+            await this.state.conn.close()
+          } catch (e) {
+            console.log(e)
+          }
           console.log("[CONN] Proceeding to disconnect")
           await this.setStateAsync({
             conn: null,
